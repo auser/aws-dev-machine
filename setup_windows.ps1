@@ -61,9 +61,9 @@ function Main {
         Install-NpmPackages $config.nodeJs
     }
 
-    if (!(Test-CommandExists("code"))) {
-        Install-VSCode $config.vscode
-    }
+    # if (!(Test-CommandExists("code"))) {
+    #     Install-VSCode $config.vscode
+    # }
 
     if(!(Test-CommandExists("aws"))) {
         InstallAWSToolsForWindowsPowerShell $config.aws
