@@ -6,21 +6,21 @@ The bootstrapper is a set of scripts intended on adding the following tools, if 
 
 ## Features
 
-⌘ Supports Mac and Windows
-📦️Idempotent
-⚙️Automated
-🏆️Fast
-😃Open-source
+- ⌘ Supports Mac and Windows
+- 📦️Idempotent
+- ⚙️Automated
+- 🏆️Fast
+- 😃Open-source
 
 ## Tools
 
-🧳Git
-🧳Homebrew (mac only)
-📄NodeJS
-💎Ruby
-🐍Python (and pip!)
-ℑ AWS cli tools
-🧑🏾‍💻git-remote-codecommit
+- 🧳Homebrew/Chocolatey
+- 🧳Git
+- 📄NodeJS
+- 💎Ruby
+- 🐍Python (and pip!)
+- ℑ AWS cli tools
+- 🧑🏾‍💻git-remote-codecommit
 
 ## Getting it running
 
