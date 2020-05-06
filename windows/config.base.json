@@ -1,0 +1,61 @@
+{
+  "setPSGalleryAsTrusted": true,
+  "restartRequired": true,
+  "chocolatey": {
+    "ignore": false,
+    "install": true,
+    "prefix": "install -y",
+    "commandName": "choco",
+    "restartRequired": true,
+    "packages": [
+      "git",
+      "visualstudiocode",
+      "python2",
+      "winrar",
+      "linkshellextension",
+      "docker-desktop",
+      "awscli"
+    ],
+    "skipPackages": []
+  },
+  "NodeJs": {
+    "ignore": false,
+    "install": true,
+    "setGlobalSettings": true,
+    "prefix": "install -g",
+    "commandName": "npm",
+    "packages": [
+      "typescript",
+      "tslint",
+      "rimraf",
+      "copy",
+      "windows-build-tools"
+    ],
+    "skipPackages": []
+  },
+  "python": {
+    "ignore": false,
+    "install": true,
+    "prefix": "install",
+    "commandName": "pip",
+    "packages": ["git-remote-codecommit"]
+  },
+  "git": {
+    "ignore": false,
+    "install": true,
+    "version": "2.26.1.1",
+    "installationPath": "C:\\Program Files\\Git"
+  },
+  "vscode": {
+    "ignore": false,
+    "install": true
+  },
+  "otherCommands": {
+    "ignore": true,
+    "install": true,
+    "preCommands": [],
+    "skipPreCommands": [],
+    "postCommands": [],
+    "skipPostCommands": []
+  }
+}
