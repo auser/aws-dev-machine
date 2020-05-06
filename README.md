@@ -56,5 +56,4 @@ In the PowerShell window, type the following command:
 
 ```bash
 iex setup_windows.ps1
-iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 ```
