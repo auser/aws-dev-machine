@@ -36,7 +36,7 @@ The `Terminal.app` is located in your `/System/Applications/Utilities/Terminal.a
 
 ### Windows
 
-Press the `Windows` key and the `R` key at the same time: `Windows+R` then search for "cmd". A command-prompt will open up and you're ready to go.
+Press the `Windows` key and the `R` key at the same time: `Windows+R` then search for "Powershell" and run it as an **administrator** (otherwise it won't work). A command-prompt will open up and you're ready to go.
 
 ![Windows Terminal](https://devblogs.microsoft.com/commandline/wp-content/uploads/sites/33/2019/05/terminal-screenshot.png)
 
@@ -55,5 +55,5 @@ In the terminal window, navigate to the directory where you downloaded the zip f
 In the PowerShell window, type the following command:
 
 ```bash
-iex setup_windows.ps1
+Set-ExecutionPolicy Bypass -Scope CurrentUser -Force; iex setup_windows.ps1
 ```

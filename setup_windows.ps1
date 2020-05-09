@@ -15,6 +15,8 @@ param($currentProfileName = $null)
 Push-Location $PSScriptRoot
 $currentScriptPath = $PSCommandPath
 
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
 Import-Module ".\windows\utils" -Force
 Import-Module ".\windows\config" -Force
 Import-Module ".\windows\downloader" -Force

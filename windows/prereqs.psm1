@@ -7,7 +7,7 @@ Write-Host "------------------------------------------" -ForegroundColor Cyan
 
 Write-Host ""
 Write-Host "trying to set ExecutionPolicy to 'RemoteSigned'"
-Set-ExecutionPolicy RemoteSigned
+Set-ExecutionPolicy Bypass -Scope CurrentUser
 
 Write-Host "trying to install: PowerShellGet"
 Install-Module -Name PowerShellGet -Force
