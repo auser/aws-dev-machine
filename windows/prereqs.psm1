@@ -6,7 +6,7 @@ Write-Host "         pre-requisites - started!" -ForegroundColor Cyan
 Write-Host "------------------------------------------" -ForegroundColor Cyan
 
 Write-Host ""
-Write-Host "trying to set ExecutionPolicy to 'RemoteSigned'"
+Write-Host "trying to set ExecutionPolicy to 'Bypass'"
 Set-ExecutionPolicy Bypass -Scope CurrentUser
 
 Write-Host "trying to install: PowerShellGet"
