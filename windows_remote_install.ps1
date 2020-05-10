@@ -23,7 +23,7 @@ if ((Get-ExecutionPolicy).ToString() -notin $allowedExecutionPolicy) {
 # get core functions
 $core_url = 'https://raw.githubusercontent.com/auser/aws-dev-machine/master/setup_windows.ps1'
 Write-Output 'Initializing...'
-Invoke-Expression (new-object System.Net.WebClient).downloadString($core_url)
+Invoke-Expression (New-Object System.Net.WebClient).downloadString($core_url)
 
 # prep
 $dir = ensure (versiondir 'setup-dev' 'current')
