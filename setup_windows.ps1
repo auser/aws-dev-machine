@@ -15,7 +15,7 @@ param($currentProfileName = $null)
 Push-Location $PSScriptRoot
 $currentScriptPath = $PSCommandPath
 
-Set-ExecutionPolicy Bypasss -Scope CurrentUser
+Set-ExecutionPolicy Bypass -Scope CurrentUser
 
 Import-Module ".\windows\utils" -Force
 Import-Module ".\windows\config" -Force

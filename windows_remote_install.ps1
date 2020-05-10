@@ -13,7 +13,6 @@ if (($PSVersionTable.PSVersion.Major) -lt 5) {
 
 # show notification to change execution policy:
 $allowedExecutionPolicy = @('Unrestricted', 'RemoteSigned', 'Bypass')
-Write-Output Get-ExecutionPolicy -List
 if ((Get-ExecutionPolicy).ToString() -notin $allowedExecutionPolicy) {
     Write-Output "PowerShell requires an execution policy in [$($allowedExecutionPolicy -join ", ")] to run."
     Write-Output "For example, to set the execution policy to 'RemoteSigned' please run :"
@@ -24,7 +23,7 @@ if ((Get-ExecutionPolicy).ToString() -notin $allowedExecutionPolicy) {
 # get core functions
 $core_url = 'https://raw.githubusercontent.com/auser/aws-dev-machine/master/setup_windows.ps1'
 Write-Output 'Initializing...'
-Invoke-Expression (new-object net.webclient).downloadstring($core_url)
+Invoke-Expression (new-object System.Net.WebClient).downloadString($core_url)
 
 # prep
 $dir = ensure (versiondir 'setup-dev' 'current')
