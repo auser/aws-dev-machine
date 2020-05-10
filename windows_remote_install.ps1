@@ -21,24 +21,104 @@ if ((Get-ExecutionPolicy).ToString() -notin $allowedExecutionPolicy) {
 }
 
 # get core functions
-$core_url = 'https://raw.githubusercontent.com/auser/aws-dev-machine/master/setup_windows.ps1'
-Write-Output 'Initializing...'
-Invoke-Expression (New-Object System.Net.WebClient).downloadString($core_url)
+# $core_url = 'https://raw.githubusercontent.com/auser/aws-dev-machine/master/setup_windows.ps1'
+# Write-Output 'Initializing...'
+# Invoke-Expression (New-Object System.Net.WebClient).downloadString($core_url)
+
+function Get-Downloader {
+    param (
+      [string]$url
+     )
+
+      $downloader = new-object System.Net.WebClient
+
+      $defaultCreds = [System.Net.CredentialCache]::DefaultCredentials
+      if ($defaultCreds -ne $null) {
+        $downloader.Credentials = $defaultCreds
+      }
+
+      $ignoreProxy = $env:chocolateyIgnoreProxy
+      if ($ignoreProxy -ne $null -and $ignoreProxy -eq 'true') {
+        Write-Debug "Explicitly bypassing proxy due to user environment variable"
+        $downloader.Proxy = [System.Net.GlobalProxySelection]::GetEmptyWebProxy()
+      } else {
+        # check if a proxy is required
+        $explicitProxy = $env:chocolateyProxyLocation
+        $explicitProxyUser = $env:chocolateyProxyUser
+        $explicitProxyPassword = $env:chocolateyProxyPassword
+        if ($explicitProxy -ne $null -and $explicitProxy -ne '') {
+          # explicit proxy
+          $proxy = New-Object System.Net.WebProxy($explicitProxy, $true)
+          if ($explicitProxyPassword -ne $null -and $explicitProxyPassword -ne '') {
+            $passwd = ConvertTo-SecureString $explicitProxyPassword -AsPlainText -Force
+            $proxy.Credentials = New-Object System.Management.Automation.PSCredential ($explicitProxyUser, $passwd)
+          }
+
+          Write-Debug "Using explicit proxy server '$explicitProxy'."
+          $downloader.Proxy = $proxy
+
+        } elseif (!$downloader.Proxy.IsBypassed($url)) {
+          # system proxy (pass through)
+          $creds = $defaultCreds
+          if ($creds -eq $null) {
+            Write-Debug "Default credentials were null. Attempting backup method"
+            $cred = get-credential
+            $creds = $cred.GetNetworkCredential();
+          }
+
+          $proxyaddress = $downloader.Proxy.GetProxy($url).Authority
+          Write-Debug "Using system proxy server '$proxyaddress'."
+          $proxy = New-Object System.Net.WebProxy($proxyaddress)
+          $proxy.Credentials = $creds
+          $downloader.Proxy = $proxy
+        }
+      }
+
+      return $downloader
+    }
+
+function Download-String {
+    param (
+        [string]$url
+    )
+    $downloader = Get-Downloader $url
+
+    return $downloader.DownloadString($url)
+}
+
+function Download-File {
+    param (
+        [string]$url,
+        [string]$file
+    )
+    #Write-Output "Downloading $url to $file"
+    $downloader = Get-Downloader $url
+
+    $downloader.DownloadFile($url, $file)
+}
+
+Write-Output "Getting latest version of the aws-dev-bootstrap."
+$zipurl = 'https://github.com/auser/aws-dev-machine/archive/master.zip'
+
+if ($env:TEMP -eq $null) {
+    $env:TEMP = Join-Path $env:SystemDrive 'temp'
+}
+$devTempDir = Join-Path $env:TEMP "aws-dev-bootstrap"
+$tempDir = Join-Path $devTempDir "bootstrapInstall"
 
 # prep
-$dir = ensure (versiondir 'setup-dev' 'current')
+if (![System.IO.Directory]::Exists($devTempDir)) {[void][System.IO.Directory]::CreateDirectory($devTempDir)}
+if (![System.IO.Directory]::Exists($tempDir)) {[void][System.IO.Directory]::CreateDirectory($tempDir)}
 
-# download scoop zip
-$zipurl = 'https://github.com/auser/aws-dev-machine/archive/master.zip'
-$zipfile = "$dir\dev-machine.zip"
 Write-Output 'Downloading dev-machine...'
-dl $zipurl $zipfile
+$zipfile = Join-Path $devTempDir "dev-machine.zip"
+Download-File $zipurl $zipfile
 
 Write-Output 'Extracting...'
 Add-Type -Assembly "System.IO.Compression.FileSystem"
-[IO.Compression.ZipFile]::ExtractToDirectory($zipfile, "$dir\_tmp")
-Copy-Item "$dir\_tmp\*master\*" $dir -Recurse -Force
-Remove-Item "$dir\_tmp", $zipfile -Recurse -Force
+[IO.Compression.ZipFile]::ExtractToDirectory($zipfile, "$tempDir")
+Copy-Item "$tempDir\*master\*" $devTempDir -Recurse -Force
+Remove-Item "$tempDir", $zipfile -Recurse -Force
 
-Write-Output 'Creating shim...'
-shim "$dir\bin\setup_windows.ps1" $false
+Write-Output 'Installing...'
+& "$devTempDir\setup_windows.ps1"
