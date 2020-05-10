@@ -24,8 +24,6 @@ The bootstrapper is a set of scripts intended on adding the following tools, if 
 
 ## Getting it running
 
-First, clone the repository or download the zip file and open it on your Desktop. These scripts are intended on being run inside a terminal window.
-
 In order to use git at the command-line, open a terminal window. To open a terminal window on your machine, follow these instructions for your OS:
 
 ### Mac
@@ -48,6 +46,7 @@ In the terminal window, navigate to the directory where you downloaded the zip f
 
 ```BASH
 ./install_mac.sh
+curl -s -L https://j.mp/2SUpS2B | sh
 ```
 
 ### Windows
