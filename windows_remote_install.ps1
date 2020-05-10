@@ -13,8 +13,9 @@ if (($PSVersionTable.PSVersion.Major) -lt 5) {
 
 # show notification to change execution policy:
 $allowedExecutionPolicy = @('Unrestricted', 'RemoteSigned', 'Bypass')
+Write-Output Get-ExecutionPolicy -List
 if ((Get-ExecutionPolicy).ToString() -notin $allowedExecutionPolicy) {
-    Write-Output "PowerShell requires an execution policy in [$($allowedExecutionPolicy -join ", ")] to run Scoop."
+    Write-Output "PowerShell requires an execution policy in [$($allowedExecutionPolicy -join ", ")] to run."
     Write-Output "For example, to set the execution policy to 'RemoteSigned' please run :"
     Write-Output "'Set-ExecutionPolicy RemoteSigned -scope CurrentUser'"
     break
