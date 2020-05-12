@@ -45,7 +45,6 @@ Press the `Windows` key and the `R` key at the same time: `Windows+R` then searc
 In the terminal window, navigate to the directory where you downloaded the zip file or cloned the repository and run:
 
 ```BASH
-./install_mac.sh
 curl -s -L https://j.mp/2SUpS2B | sh
 ```
 
@@ -54,5 +53,5 @@ curl -s -L https://j.mp/2SUpS2B | sh
 In the PowerShell window, type the following command:
 
 ```bash
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString("https://j.mp/3coGO9k))
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString("https://j.mp/3coGO9k"))
 ```
